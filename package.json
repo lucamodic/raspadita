@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  },
+  "scripts": {
+    "dev": "tsc && node dist/script.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5"
+  }
+}
