@@ -6,8 +6,18 @@ const PRIZES = {
   game2: [42000, 100000, 250000, 1000000, 2000000],
 };
 
+function generateRandomId(): string {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let id = "";
+  for (let i = 0; i < 6; i++) {
+    id += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return id;
+}
+
 export function generateTicket(
-  id: number,
+  id: string,
   probabilities: Record<string, number>
 ): Ticket {
   const random = Math.random() * 100;
@@ -67,7 +77,7 @@ export function generateTickets(
 ): Ticket[] {
   const tickets: Ticket[] = [];
   for (let i = 0; i < quantity; i++) {
-    tickets.push(generateTicket(i + 1, probabilities));
+    tickets.push(generateTicket(generateRandomId(), probabilities));
   }
   return tickets;
 }

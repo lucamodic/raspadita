@@ -1,5 +1,5 @@
 export interface Ticket {
-  id: number;
+  id: string;
   gameWon: number | null;
   prize: number;
   details: any;
