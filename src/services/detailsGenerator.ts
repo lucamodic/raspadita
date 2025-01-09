@@ -70,18 +70,33 @@ function generateSpecificSymbolArray(prize: Prize): Symbol[] {
 }
 
 function generateRandomSymbolArray(): Symbol[] {
-  return Array.from(
-    { length: 4 },
-    () => SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]
-  );
+  let symbolsArray: Symbol[] = [];
+
+  while (symbolsArray.length < 4) {
+    const randomSymbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    const count = symbolsArray.filter(
+      (symbol) => symbol === randomSymbol
+    ).length;
+
+    if (count < 2) {
+      symbolsArray.push(randomSymbol);
+    }
+  }
+
+  return symbolsArray;
 }
 
 export function generateArrayGame2(prize: Prize): Symbol[] {
   const specificArray = generateSpecificSymbolArray(prize);
 
   if (prize === 42000) {
-    const symbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-    const randomSymbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    let symbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    let randomSymbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+
+    while (symbol === randomSymbol) {
+      randomSymbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    }
+
     return [symbol, symbol, symbol, randomSymbol];
   }
 
