@@ -1,4 +1,3 @@
-// Define the symbols used in the game
 const SYMBOLS = ["😃", "💵", "💲", "💰"] as const;
 
 type Symbol = (typeof SYMBOLS)[number];
@@ -91,6 +90,24 @@ export function generateArrayGame2(prize: Prize): Symbol[] {
   return generateRandomSymbolArray();
 }
 
+function generateNonWinningNumbers(
+  winningNumbers: number[],
+  count: number
+): number[] {
+  const allNumbers = new Set<number>(winningNumbers);
+  const result: number[] = [];
+
+  while (result.length < count) {
+    const newNumber = Math.floor(Math.random() * 100);
+    if (!allNumbers.has(newNumber)) {
+      result.push(newNumber);
+      allNumbers.add(newNumber);
+    }
+  }
+
+  return result;
+}
+
 export function generateDetails(
   gameWon: GameWon,
   prize: Prize
@@ -115,12 +132,16 @@ export function generateDetails(
       break;
     case 2:
       symbols = generateArrayGame2(prize);
-      grid = matrix.grid.map((row) => row.map((num) => num + 1000));
+      grid = Array.from({ length: 4 }, () =>
+        generateNonWinningNumbers(winningNumbers, 3)
+      );
       break;
     case 3:
       logoIncluded = true;
       symbols = generateArrayGame2(null);
-      grid = matrix.grid.map((row) => row.map((num) => num + 1000));
+      grid = Array.from({ length: 4 }, () =>
+        generateNonWinningNumbers(winningNumbers, 3)
+      );
       break;
     default:
       grid = matrix.grid;
